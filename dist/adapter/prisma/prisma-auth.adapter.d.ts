@@ -1,0 +1,44 @@
+import { PrismaClient } from '@prisma/client';
+import type { IAuthAdapter, UserRecord, ProfileRecord, RoleRecord, PermissionRecord, RefreshTokenRecord, PasswordResetTokenRecord, CreateUserData, UpdateUserData, UpsertProfileData, CreateRoleData, CreatePermissionData, CreateRefreshTokenData, CreatePasswordResetTokenData, ListUsersOptions, PaginatedUsersResult } from '../adapter.interface';
+export declare class PrismaAuthAdapter implements IAuthAdapter {
+    private readonly prisma;
+    constructor(prisma: PrismaClient);
+    findUserById(id: string): Promise<UserRecord | null>;
+    findUserByEmail(email: string): Promise<UserRecord | null>;
+    findUserByUsername(username: string): Promise<UserRecord | null>;
+    findUserByIdentifier(identifier: string): Promise<UserRecord | null>;
+    createUser(data: CreateUserData): Promise<UserRecord>;
+    updateUser(id: string, data: UpdateUserData): Promise<UserRecord>;
+    deleteUser(id: string): Promise<void>;
+    listUsers(opts: ListUsersOptions): Promise<PaginatedUsersResult>;
+    setUserPassword(id: string, passwordHash: string): Promise<void>;
+    findProfileByUserId(userId: string): Promise<ProfileRecord | null>;
+    upsertProfile(userId: string, data: UpsertProfileData): Promise<ProfileRecord>;
+    createRole(data: CreateRoleData): Promise<RoleRecord>;
+    findRoleById(id: string): Promise<RoleRecord | null>;
+    findRoleByName(name: string): Promise<RoleRecord | null>;
+    listRoles(): Promise<RoleRecord[]>;
+    deleteRole(id: string): Promise<void>;
+    assignRoleToUser(userId: string, roleId: string): Promise<void>;
+    removeRoleFromUser(userId: string, roleId: string): Promise<void>;
+    getUserRoles(userId: string): Promise<RoleRecord[]>;
+    createPermission(data: CreatePermissionData): Promise<PermissionRecord>;
+    findPermissionById(id: string): Promise<PermissionRecord | null>;
+    findPermissionByKey(key: string): Promise<PermissionRecord | null>;
+    listPermissions(): Promise<PermissionRecord[]>;
+    deletePermission(id: string): Promise<void>;
+    assignPermissionToRole(roleId: string, permissionId: string): Promise<void>;
+    removePermissionFromRole(roleId: string, permissionId: string): Promise<void>;
+    getRolePermissions(roleId: string): Promise<PermissionRecord[]>;
+    getUserPermissions(userId: string): Promise<PermissionRecord[]>;
+    createRefreshToken(data: CreateRefreshTokenData): Promise<RefreshTokenRecord>;
+    findRefreshToken(token: string): Promise<RefreshTokenRecord | null>;
+    revokeRefreshToken(token: string): Promise<void>;
+    revokeAllRefreshTokensForUser(userId: string): Promise<void>;
+    deleteExpiredRefreshTokens(): Promise<void>;
+    createPasswordResetToken(data: CreatePasswordResetTokenData): Promise<PasswordResetTokenRecord>;
+    findPasswordResetToken(token: string): Promise<PasswordResetTokenRecord | null>;
+    consumePasswordResetToken(token: string): Promise<void>;
+    deleteExpiredPasswordResetTokens(): Promise<void>;
+}
+//# sourceMappingURL=prisma-auth.adapter.d.ts.map
