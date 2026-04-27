@@ -2,16 +2,16 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import type { RoleRecord } from '../../adapter/adapter.interface';
 
 export class RoleResponseDto {
-  @ApiProperty({ description: 'Role ID', example: 'clxyz456' })
+  @ApiProperty({ type: String, description: 'Role ID', example: 'clxyz456' })
   id!: string;
 
-  @ApiProperty({ description: 'Role name', example: 'admin' })
+  @ApiProperty({ type: String, description: 'Role name', example: 'admin' })
   name!: string;
 
-  @ApiPropertyOptional({ description: 'Role description', example: 'Full system access', nullable: true })
+  @ApiPropertyOptional({ type: String, description: 'Role description', example: 'Full system access', nullable: true })
   description!: string | null;
 
-  @ApiProperty({ description: 'Creation timestamp' })
+  @ApiProperty({ type: Date, description: 'Creation timestamp' })
   createdAt!: Date;
 
   static from(role: RoleRecord): RoleResponseDto {

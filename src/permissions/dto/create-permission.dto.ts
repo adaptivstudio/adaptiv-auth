@@ -3,6 +3,7 @@ import { IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
 
 export class CreatePermissionDto {
   @ApiProperty({
+    type: String,
     description: 'Permission key in "resource:action" format',
     example: 'posts:create',
   })
@@ -13,7 +14,7 @@ export class CreatePermissionDto {
   })
   key!: string;
 
-  @ApiPropertyOptional({ description: 'Permission description', example: 'Create new posts' })
+  @ApiPropertyOptional({ type: String, description: 'Permission description', example: 'Create new posts' })
   @IsOptional()
   @IsString()
   description?: string;

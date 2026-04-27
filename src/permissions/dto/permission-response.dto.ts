@@ -2,16 +2,16 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import type { PermissionRecord } from '../../adapter/adapter.interface';
 
 export class PermissionResponseDto {
-  @ApiProperty({ description: 'Permission ID', example: 'clxyz789' })
+  @ApiProperty({ type: String, description: 'Permission ID', example: 'clxyz789' })
   id!: string;
 
-  @ApiProperty({ description: 'Permission key', example: 'posts:create' })
+  @ApiProperty({ type: String, description: 'Permission key', example: 'posts:create' })
   key!: string;
 
-  @ApiPropertyOptional({ description: 'Permission description', example: 'Create new posts', nullable: true })
+  @ApiPropertyOptional({ type: String, description: 'Permission description', example: 'Create new posts', nullable: true })
   description!: string | null;
 
-  @ApiProperty({ description: 'Creation timestamp' })
+  @ApiProperty({ type: Date, description: 'Creation timestamp' })
   createdAt!: Date;
 
   static from(permission: PermissionRecord): PermissionResponseDto {

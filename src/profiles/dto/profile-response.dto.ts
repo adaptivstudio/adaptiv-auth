@@ -2,28 +2,28 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import type { ProfileMetadata, ProfileRecord } from '../../adapter/adapter.interface';
 
 export class ProfileResponseDto {
-  @ApiProperty({ description: 'Profile ID', example: 'clxyzabc' })
+  @ApiProperty({ type: String, description: 'Profile ID', example: 'clxyzabc' })
   id!: string;
 
-  @ApiProperty({ description: 'User ID this profile belongs to', example: 'clxyz123' })
+  @ApiProperty({ type: String, description: 'User ID this profile belongs to', example: 'clxyz123' })
   userId!: string;
 
-  @ApiPropertyOptional({ description: 'First name', example: 'John', nullable: true })
+  @ApiPropertyOptional({ type: String, description: 'First name', example: 'John', nullable: true })
   firstName!: string | null;
 
-  @ApiPropertyOptional({ description: 'Last name', example: 'Doe', nullable: true })
+  @ApiPropertyOptional({ type: String, description: 'Last name', example: 'Doe', nullable: true })
   lastName!: string | null;
 
-  @ApiPropertyOptional({ description: 'Avatar URL', example: 'https://example.com/avatar.png', nullable: true })
+  @ApiPropertyOptional({ type: String, description: 'Avatar URL', example: 'https://example.com/avatar.png', nullable: true })
   avatarUrl!: string | null;
 
-  @ApiProperty({ description: 'Extensible metadata', example: {}, type: Object })
+  @ApiProperty({ type: Object, description: 'Extensible metadata', example: {} })
   metadata!: ProfileMetadata;
 
-  @ApiProperty({ description: 'Creation timestamp' })
+  @ApiProperty({ type: Date, description: 'Creation timestamp' })
   createdAt!: Date;
 
-  @ApiProperty({ description: 'Last update timestamp' })
+  @ApiProperty({ type: Date, description: 'Last update timestamp' })
   updatedAt!: Date;
 
   static from(profile: ProfileRecord): ProfileResponseDto {

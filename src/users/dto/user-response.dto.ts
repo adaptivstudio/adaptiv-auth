@@ -2,22 +2,22 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import type { UserRecord } from '../../adapter/adapter.interface';
 
 export class UserResponseDto {
-  @ApiProperty({ description: 'User ID', example: 'clxyz123' })
+  @ApiProperty({ type: String, description: 'User ID', example: 'clxyz123' })
   id!: string;
 
-  @ApiProperty({ description: 'Email address', example: 'john@example.com' })
+  @ApiProperty({ type: String, description: 'Email address', example: 'john@example.com' })
   email!: string;
 
-  @ApiPropertyOptional({ description: 'Username', example: 'johndoe', nullable: true })
+  @ApiPropertyOptional({ type: String, description: 'Username', example: 'johndoe', nullable: true })
   username!: string | null;
 
-  @ApiProperty({ description: 'Whether the account is active', example: true })
+  @ApiProperty({ type: Boolean, description: 'Whether the account is active', example: true })
   isActive!: boolean;
 
-  @ApiProperty({ description: 'Creation timestamp' })
+  @ApiProperty({ type: Date, description: 'Creation timestamp' })
   createdAt!: Date;
 
-  @ApiProperty({ description: 'Last update timestamp' })
+  @ApiProperty({ type: Date, description: 'Last update timestamp' })
   updatedAt!: Date;
 
   static from(user: UserRecord): UserResponseDto {
@@ -31,5 +31,3 @@ export class UserResponseDto {
     return dto;
   }
 }
-
-

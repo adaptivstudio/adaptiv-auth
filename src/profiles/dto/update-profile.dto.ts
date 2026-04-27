@@ -3,25 +3,25 @@ import { IsOptional, IsString, IsUrl } from 'class-validator';
 import type { ProfileMetadata } from '../../adapter/adapter.interface';
 
 export class UpdateProfileDto {
-  @ApiPropertyOptional({ description: 'First name', example: 'John' })
+  @ApiPropertyOptional({ type: String, description: 'First name', example: 'John' })
   @IsOptional()
   @IsString()
   firstName?: string;
 
-  @ApiPropertyOptional({ description: 'Last name', example: 'Doe' })
+  @ApiPropertyOptional({ type: String, description: 'Last name', example: 'Doe' })
   @IsOptional()
   @IsString()
   lastName?: string;
 
-  @ApiPropertyOptional({ description: 'Avatar URL', example: 'https://example.com/avatar.png' })
+  @ApiPropertyOptional({ type: String, description: 'Avatar URL', example: 'https://example.com/avatar.png' })
   @IsOptional()
   @IsUrl()
   avatarUrl?: string;
 
   @ApiPropertyOptional({
+    type: Object,
     description: 'Arbitrary key-value metadata for extensibility',
     example: { bio: 'Developer', timezone: 'UTC' },
-    type: Object,
   })
   @IsOptional()
   metadata?: ProfileMetadata;
