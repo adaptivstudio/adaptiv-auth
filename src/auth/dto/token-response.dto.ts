@@ -8,7 +8,7 @@ export class TokenResponseDto {
   @ApiProperty({ description: 'Long-lived opaque refresh token' })
   refreshToken!: string;
 
-  @ApiProperty({ type: UserResponseDto, required: false })
+  @ApiProperty({ type: () => UserResponseDto, required: false })
   user?: UserResponseDto;
 }
 

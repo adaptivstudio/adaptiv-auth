@@ -21,7 +21,7 @@ export class ProfilesController {
   @Get()
   @ApiOperation({ summary: 'Get the profile for a user' })
   @ApiParam({ name: 'userId', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'Profile found', type: ProfileResponseDto })
+  @ApiResponse({ status: 200, description: 'Profile found', type: () => ProfileResponseDto })
   @ApiResponse({ status: 404, description: 'Profile not found' })
   async findOne(@Param('userId') userId: string): Promise<ProfileResponseDto> {
     const profile = await this.profilesService.findByUserId(userId);
@@ -31,7 +31,7 @@ export class ProfilesController {
   @Patch()
   @ApiOperation({ summary: 'Create or update the profile for a user' })
   @ApiParam({ name: 'userId', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'Profile upserted', type: ProfileResponseDto })
+  @ApiResponse({ status: 200, description: 'Profile upserted', type: () => ProfileResponseDto })
   async upsert(
     @Param('userId') userId: string,
     @Body() dto: UpdateProfileDto,

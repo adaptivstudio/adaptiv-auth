@@ -76,7 +76,8 @@ export { TokenResponseDto, RefreshResponseDto } from './auth/dto/token-response.
 export { CreateUserDto } from './users/dto/create-user.dto';
 export { UpdateUserDto } from './users/dto/update-user.dto';
 export { ListUsersQueryDto } from './users/dto/list-users-query.dto';
-export { UserResponseDto, PaginatedUsersResponseDto } from './users/dto/user-response.dto';
+export { UserResponseDto } from './users/dto/user-response.dto';
+export { PaginatedUsersResponseDto } from './users/dto/paginated-users-response.dto';
 
 // DTOs — Profiles
 export { UpdateProfileDto } from './profiles/dto/update-profile.dto';

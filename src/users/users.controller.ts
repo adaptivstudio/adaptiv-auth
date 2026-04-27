@@ -22,7 +22,8 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ListUsersQueryDto } from './dto/list-users-query.dto';
-import { PaginatedUsersResponseDto, UserResponseDto } from './dto/user-response.dto';
+import { UserResponseDto } from './dto/user-response.dto';
+import { PaginatedUsersResponseDto } from './dto/paginated-users-response.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('users')
@@ -34,7 +35,7 @@ export class UsersController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({ status: 201, description: 'User created', type: UserResponseDto })
+  @ApiResponse({ status: 201, description: 'User created', type: () => UserResponseDto })
   @ApiResponse({ status: 409, description: 'Email or username already in use' })
   async create(@Body() dto: CreateUserDto): Promise<UserResponseDto> {
     const user = await this.usersService.create(dto);
@@ -43,7 +44,7 @@ export class UsersController {
 
   @Get()
   @ApiOperation({ summary: 'List users with optional pagination and search' })
-  @ApiResponse({ status: 200, description: 'Paginated user list', type: PaginatedUsersResponseDto })
+  @ApiResponse({ status: 200, description: 'Paginated user list', type: () => PaginatedUsersResponseDto })
   async list(@Query() query: ListUsersQueryDto): Promise<PaginatedUsersResponseDto> {
     const result = await this.usersService.list(query);
     return {
@@ -57,7 +58,7 @@ export class UsersController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a user by ID' })
   @ApiParam({ name: 'id', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'User found', type: UserResponseDto })
+  @ApiResponse({ status: 200, description: 'User found', type: () => UserResponseDto })
   @ApiResponse({ status: 404, description: 'User not found' })
   async findOne(@Param('id') id: string): Promise<UserResponseDto> {
     const user = await this.usersService.findById(id);
@@ -67,7 +68,7 @@ export class UsersController {
   @Patch(':id')
   @ApiOperation({ summary: 'Update a user' })
   @ApiParam({ name: 'id', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'User updated', type: UserResponseDto })
+  @ApiResponse({ status: 200, description: 'User updated', type: () => UserResponseDto })
   @ApiResponse({ status: 404, description: 'User not found' })
   async update(@Param('id') id: string, @Body() dto: UpdateUserDto): Promise<UserResponseDto> {
     const user = await this.usersService.update(id, dto);

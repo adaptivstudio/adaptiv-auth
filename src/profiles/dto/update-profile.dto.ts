@@ -21,6 +21,7 @@ export class UpdateProfileDto {
   @ApiPropertyOptional({
     description: 'Arbitrary key-value metadata for extensibility',
     example: { bio: 'Developer', timezone: 'UTC' },
+    type: Object,
   })
   @IsOptional()
   metadata?: ProfileMetadata;

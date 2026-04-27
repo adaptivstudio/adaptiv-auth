@@ -17,7 +17,7 @@ export class ProfileResponseDto {
   @ApiPropertyOptional({ description: 'Avatar URL', example: 'https://example.com/avatar.png', nullable: true })
   avatarUrl!: string | null;
 
-  @ApiProperty({ description: 'Extensible metadata', example: {} })
+  @ApiProperty({ description: 'Extensible metadata', example: {}, type: Object })
   metadata!: ProfileMetadata;
 
   @ApiProperty({ description: 'Creation timestamp' })

@@ -31,7 +31,7 @@ export class RolesController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new role' })
-  @ApiResponse({ status: 201, description: 'Role created', type: RoleResponseDto })
+  @ApiResponse({ status: 201, description: 'Role created', type: () => RoleResponseDto })
   @ApiResponse({ status: 409, description: 'Role name already exists' })
   async create(@Body() dto: CreateRoleDto): Promise<RoleResponseDto> {
     const role = await this.rolesService.create(dto);
@@ -40,7 +40,7 @@ export class RolesController {
 
   @Get()
   @ApiOperation({ summary: 'List all roles' })
-  @ApiResponse({ status: 200, description: 'List of roles', type: [RoleResponseDto] })
+  @ApiResponse({ status: 200, description: 'List of roles', type: () => [RoleResponseDto] })
   async list(): Promise<RoleResponseDto[]> {
     const roles = await this.rolesService.list();
     return roles.map(RoleResponseDto.from);
@@ -49,7 +49,7 @@ export class RolesController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a role by ID' })
   @ApiParam({ name: 'id', description: 'Role ID' })
-  @ApiResponse({ status: 200, description: 'Role found', type: RoleResponseDto })
+  @ApiResponse({ status: 200, description: 'Role found', type: () => RoleResponseDto })
   @ApiResponse({ status: 404, description: 'Role not found' })
   async findOne(@Param('id') id: string): Promise<RoleResponseDto> {
     const role = await this.rolesService.findById(id);
@@ -94,7 +94,7 @@ export class RolesController {
   @Get('users/:userId')
   @ApiOperation({ summary: 'Get all roles for a user' })
   @ApiParam({ name: 'userId', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'User roles', type: [RoleResponseDto] })
+  @ApiResponse({ status: 200, description: 'User roles', type: () => [RoleResponseDto] })
   async getUserRoles(@Param('userId') userId: string): Promise<RoleResponseDto[]> {
     const roles = await this.rolesService.getUserRoles(userId);
     return roles.map(RoleResponseDto.from);

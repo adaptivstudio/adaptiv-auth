@@ -36,7 +36,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Login with email/username and password' })
-  @ApiResponse({ status: 200, description: 'Login successful', type: TokenResponseDto })
+  @ApiResponse({ status: 200, description: 'Login successful', type: () => TokenResponseDto })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(
     @Body() _dto: LoginDto,
@@ -54,7 +54,7 @@ export class AuthController {
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Rotate a refresh token and obtain new token pair' })
-  @ApiResponse({ status: 200, description: 'Tokens refreshed', type: RefreshResponseDto })
+  @ApiResponse({ status: 200, description: 'Tokens refreshed', type: () => RefreshResponseDto })
   @ApiResponse({ status: 401, description: 'Invalid or expired refresh token' })
   async refresh(@Body() dto: RefreshTokenDto): Promise<RefreshResponseDto> {
     return this.authService.refresh(dto.refreshToken);
