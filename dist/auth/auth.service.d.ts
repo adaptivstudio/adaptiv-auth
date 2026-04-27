@@ -19,6 +19,11 @@ export declare class AuthService {
         accessToken: string;
         refreshToken: string;
     }>;
+    me(userId: string): Promise<{
+        user: UserRecord;
+        roles: string[];
+        permissions: string[];
+    }>;
     logout(refreshToken: string): Promise<void>;
     logoutAll(userId: string): Promise<void>;
     private issueRefreshToken;

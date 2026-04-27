@@ -63,6 +63,22 @@ export class AuthService {
     return { accessToken, refreshToken: newRefreshToken };
   }
 
+  async me(userId: string): Promise<{ user: UserRecord; roles: string[]; permissions: string[] }> {
+    const user = await this.adapter.findUserById(userId);
+    if (!user || !user.isActive) {
+      throw new UnauthorizedException('User not found or inactive');
+    }
+    const [roles, permissions] = await Promise.all([
+      this.adapter.getUserRoles(userId),
+      this.adapter.getUserPermissions(userId),
+    ]);
+    return {
+      user,
+      roles: roles.map((r) => r.name),
+      permissions: permissions.map((p) => p.key),
+    };
+  }
+
   async logout(refreshToken: string): Promise<void> {
     await this.adapter.revokeRefreshToken(refreshToken);
   }

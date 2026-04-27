@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -21,6 +22,7 @@ import { Public } from '../decorators/public.decorator';
 import { UserResponseDto } from '../users/dto/user-response.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { MeResponseDto } from './dto/me-response.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RefreshResponseDto, TokenResponseDto } from './dto/token-response.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -58,6 +60,21 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Invalid or expired refresh token' })
   async refresh(@Body() dto: RefreshTokenDto): Promise<RefreshResponseDto> {
     return this.authService.refresh(dto.refreshToken);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get the authenticated user with their current roles and permissions' })
+  @ApiResponse({ status: 200, description: 'Current user', type: () => MeResponseDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async me(@CurrentUser() user: JwtPayload): Promise<MeResponseDto> {
+    const result = await this.authService.me(user.sub);
+    return {
+      user: UserResponseDto.from(result.user),
+      roles: result.roles,
+      permissions: result.permissions,
+    };
   }
 
   @UseGuards(JwtAuthGuard)

@@ -21,6 +21,7 @@ export { RolesService } from './roles/roles.service';
 export { PermissionsService } from './permissions/permissions.service';
 export { PasswordRecoveryService } from './password-recovery/password-recovery.service';
 export { LoginDto } from './auth/dto/login.dto';
+export { MeResponseDto } from './auth/dto/me-response.dto';
 export { RefreshTokenDto } from './auth/dto/refresh-token.dto';
 export { TokenResponseDto, RefreshResponseDto } from './auth/dto/token-response.dto';
 export { CreateUserDto } from './users/dto/create-user.dto';

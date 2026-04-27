@@ -20,6 +20,7 @@ const public_decorator_1 = require("../decorators/public.decorator");
 const user_response_dto_1 = require("../users/dto/user-response.dto");
 const auth_service_1 = require("./auth.service");
 const login_dto_1 = require("./dto/login.dto");
+const me_response_dto_1 = require("./dto/me-response.dto");
 const refresh_token_dto_1 = require("./dto/refresh-token.dto");
 const token_response_dto_1 = require("./dto/token-response.dto");
 const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
@@ -38,6 +39,14 @@ let AuthController = class AuthController {
     }
     async refresh(dto) {
         return this.authService.refresh(dto.refreshToken);
+    }
+    async me(user) {
+        const result = await this.authService.me(user.sub);
+        return {
+            user: user_response_dto_1.UserResponseDto.from(result.user),
+            roles: result.roles,
+            permissions: result.permissions,
+        };
     }
     async logout(dto) {
         await this.authService.logout(dto.refreshToken);
@@ -73,6 +82,18 @@ __decorate([
     __metadata("design:paramtypes", [refresh_token_dto_1.RefreshTokenDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "refresh", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('me'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Get the authenticated user with their current roles and permissions' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Current user', type: () => me_response_dto_1.MeResponseDto }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized' }),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "me", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('logout'),

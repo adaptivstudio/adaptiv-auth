@@ -69,6 +69,7 @@ export { PasswordRecoveryService } from './password-recovery/password-recovery.s
 
 // DTOs — Auth
 export { LoginDto } from './auth/dto/login.dto';
+export { MeResponseDto } from './auth/dto/me-response.dto';
 export { RefreshTokenDto } from './auth/dto/refresh-token.dto';
 export { TokenResponseDto, RefreshResponseDto } from './auth/dto/token-response.dto';
 
