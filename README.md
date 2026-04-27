@@ -80,22 +80,120 @@ import { AdaptivAuthModule, PrismaAuthAdapter, PrismaService } from '@adaptiv/au
 export class AppModule {}
 ```
 
-### Async registration (with ConfigService)
+### Async registration with a factory
+
+`registerAsync` lets you inject any NestJS provider into the factory so configuration and dependencies resolve through the IoC container.
+
+**Pattern 1 — read config from `ConfigService`**
 
 ```ts
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AdaptivAuthModule, PrismaAuthAdapter, PrismaService } from '@adaptiv/auth';
+
 AdaptivAuthModule.registerAsync({
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => ({
     adapter: new PrismaAuthAdapter(new PrismaService()),
     jwt: {
-      accessSecret: config.get('JWT_ACCESS_SECRET'),
-      refreshSecret: config.get('JWT_REFRESH_SECRET'),
+      accessSecret: config.getOrThrow('JWT_ACCESS_SECRET'),
+      refreshSecret: config.getOrThrow('JWT_REFRESH_SECRET'),
       accessExpiresIn: config.get('JWT_ACCESS_EXPIRES', '15m'),
       refreshExpiresIn: config.get('JWT_REFRESH_EXPIRES', '7d'),
     },
   }),
-}),
+})
+```
+
+**Pattern 2 — reuse the app's existing `PrismaService`**
+
+If your app already has its own `PrismaService` (and you don't want two separate Prisma connections), inject it directly:
+
+```ts
+import { PrismaService } from './prisma/prisma.service'; // your app's service
+import { AdaptivAuthModule, PrismaAuthAdapter } from '@adaptiv/auth';
+
+AdaptivAuthModule.registerAsync({
+  imports: [ConfigModule, PrismaModule],
+  inject: [ConfigService, PrismaService],
+  useFactory: (config: ConfigService, prisma: PrismaService) => ({
+    adapter: new PrismaAuthAdapter(prisma),
+    jwt: {
+      accessSecret: config.getOrThrow('JWT_ACCESS_SECRET'),
+      refreshSecret: config.getOrThrow('JWT_REFRESH_SECRET'),
+      accessExpiresIn: '15m',
+      refreshExpiresIn: '7d',
+    },
+  }),
+})
+```
+
+**Pattern 3 — inject a mailer service for password recovery**
+
+```ts
+import { MailerService } from './mailer/mailer.service';
+
+AdaptivAuthModule.registerAsync({
+  imports: [ConfigModule, PrismaModule, MailerModule],
+  inject: [ConfigService, PrismaService, MailerService],
+  useFactory: (config: ConfigService, prisma: PrismaService, mailer: MailerService) => ({
+    adapter: new PrismaAuthAdapter(prisma),
+    jwt: {
+      accessSecret: config.getOrThrow('JWT_ACCESS_SECRET'),
+      refreshSecret: config.getOrThrow('JWT_REFRESH_SECRET'),
+      accessExpiresIn: '15m',
+      refreshExpiresIn: '7d',
+    },
+    passwordRecovery: {
+      tokenExpiresInMinutes: 60,
+      onTokenGenerated: async (email, token, user) => {
+        await mailer.sendPasswordReset({
+          to: email,
+          name: user.username ?? user.email,
+          resetUrl: `${config.get('APP_URL')}/reset-password?token=${token}`,
+        });
+      },
+    },
+  }),
+})
+```
+
+**Pattern 4 — custom adapter with injected dependencies**
+
+Implement `IAuthAdapter` and inject whatever your adapter needs:
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { IAuthAdapter, UserRecord, /* ... */ } from '@adaptiv/auth';
+import { MongoService } from './mongo/mongo.service';
+
+@Injectable()
+export class MongoAuthAdapter implements IAuthAdapter {
+  constructor(private readonly mongo: MongoService) {}
+
+  async findUserById(id: string): Promise<UserRecord | null> {
+    return this.mongo.users.findOne({ _id: id });
+  }
+  // ... implement remaining methods
+}
+```
+
+Then inject it into the factory:
+
+```ts
+AdaptivAuthModule.registerAsync({
+  imports: [ConfigModule, MongoModule],
+  inject: [ConfigService, MongoAuthAdapter],
+  useFactory: (config: ConfigService, adapter: MongoAuthAdapter) => ({
+    adapter,
+    jwt: {
+      accessSecret: config.getOrThrow('JWT_ACCESS_SECRET'),
+      refreshSecret: config.getOrThrow('JWT_REFRESH_SECRET'),
+      accessExpiresIn: '15m',
+      refreshExpiresIn: '7d',
+    },
+  }),
+})
 ```
 
 ### 3. Set up Swagger (optional)
