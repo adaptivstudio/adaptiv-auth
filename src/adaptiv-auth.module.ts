@@ -1,12 +1,12 @@
 import { DynamicModule, InjectionToken, Module, OptionalFactoryDependency, Provider } from '@nestjs/common';
 import { ADAPTIV_AUTH_ADAPTER, ADAPTIV_AUTH_OPTIONS } from './adaptiv-auth.constants';
 import type { AdaptivAuthOptions } from './adaptiv-auth.interfaces';
-import { AuthModule } from './auth/auth.module';
-import { PasswordRecoveryModule } from './password-recovery/password-recovery.module';
-import { PermissionsModule } from './permissions/permissions.module';
-import { ProfilesModule } from './profiles/profiles.module';
-import { RolesModule } from './roles/roles.module';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { PasswordRecoveryModule } from './modules/password-recovery/password-recovery.module';
+import { PermissionsModule } from './modules/permissions/permissions.module';
+import { ProfilesModule } from './modules/profiles/profiles.module';
+import { RolesModule } from './modules/roles/roles.module';
+import { UsersModule } from './modules/users/users.module';
 
 export interface AdaptivAuthAsyncOptions {
   imports?: DynamicModule['imports'];

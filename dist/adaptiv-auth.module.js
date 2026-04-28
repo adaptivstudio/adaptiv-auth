@@ -10,12 +10,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdaptivAuthModule = void 0;
 const common_1 = require("@nestjs/common");
 const adaptiv_auth_constants_1 = require("./adaptiv-auth.constants");
-const auth_module_1 = require("./auth/auth.module");
-const password_recovery_module_1 = require("./password-recovery/password-recovery.module");
-const permissions_module_1 = require("./permissions/permissions.module");
-const profiles_module_1 = require("./profiles/profiles.module");
-const roles_module_1 = require("./roles/roles.module");
-const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./modules/auth/auth.module");
+const password_recovery_module_1 = require("./modules/password-recovery/password-recovery.module");
+const permissions_module_1 = require("./modules/permissions/permissions.module");
+const profiles_module_1 = require("./modules/profiles/profiles.module");
+const roles_module_1 = require("./modules/roles/roles.module");
+const users_module_1 = require("./modules/users/users.module");
 function createCoreProviders(options) {
     return [
         { provide: adaptiv_auth_constants_1.ADAPTIV_AUTH_OPTIONS, useValue: options },

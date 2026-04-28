@@ -48,8 +48,8 @@ export { PrismaService } from './adapter/prisma/prisma.service';
 export { PrismaAuthModule } from './adapter/prisma/prisma-auth.module';
 
 // Guards
-export { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
-export { LocalAuthGuard } from './auth/guards/local-auth.guard';
+export { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
+export { LocalAuthGuard } from './modules/auth/guards/local-auth.guard';
 export { PermissionsGuard } from './guards/permissions.guard';
 export { RolesGuard } from './guards/roles.guard';
 
@@ -60,43 +60,43 @@ export { RequirePermissions } from './decorators/require-permissions.decorator';
 export { RequireRoles } from './decorators/require-roles.decorator';
 
 // Services
-export { AuthService } from './auth/auth.service';
-export { UsersService } from './users/users.service';
-export { ProfilesService } from './profiles/profiles.service';
-export { RolesService } from './roles/roles.service';
-export { PermissionsService } from './permissions/permissions.service';
-export { PasswordRecoveryService } from './password-recovery/password-recovery.service';
+export { AuthService } from './modules/auth/auth.service';
+export { UsersService } from './modules/users/users.service';
+export { ProfilesService } from './modules/profiles/profiles.service';
+export { RolesService } from './modules/roles/roles.service';
+export { PermissionsService } from './modules/permissions/permissions.service';
+export { PasswordRecoveryService } from './modules/password-recovery/password-recovery.service';
 
 // DTOs — Auth
-export { LoginDto } from './auth/dto/login.dto';
-export { MeResponseDto } from './auth/dto/me-response.dto';
-export { RefreshTokenDto } from './auth/dto/refresh-token.dto';
-export { TokenResponseDto, RefreshResponseDto } from './auth/dto/token-response.dto';
+export { LoginDto } from './modules/auth/dto/login.dto';
+export { MeResponseDto } from './modules/auth/dto/me-response.dto';
+export { RefreshTokenDto } from './modules/auth/dto/refresh-token.dto';
+export { TokenResponseDto, RefreshResponseDto } from './modules/auth/dto/token-response.dto';
 
 // DTOs — Users
-export { CreateUserDto } from './users/dto/create-user.dto';
-export { UpdateUserDto } from './users/dto/update-user.dto';
-export { ListUsersQueryDto } from './users/dto/list-users-query.dto';
-export { UserResponseDto } from './users/dto/user-response.dto';
-export { PaginatedUsersResponseDto } from './users/dto/paginated-users-response.dto';
+export { CreateUserDto } from './modules/users/dto/create-user.dto';
+export { UpdateUserDto } from './modules/users/dto/update-user.dto';
+export { ListUsersQueryDto } from './modules/users/dto/list-users-query.dto';
+export { UserResponseDto } from './modules/users/dto/user-response.dto';
+export { PaginatedUsersResponseDto } from './modules/users/dto/paginated-users-response.dto';
 
 // DTOs — Profiles
-export { UpdateProfileDto } from './profiles/dto/update-profile.dto';
-export { ProfileResponseDto } from './profiles/dto/profile-response.dto';
+export { UpdateProfileDto } from './modules/profiles/dto/update-profile.dto';
+export { ProfileResponseDto } from './modules/profiles/dto/profile-response.dto';
 
 // DTOs — Roles
-export { CreateRoleDto } from './roles/dto/create-role.dto';
-export { AssignRoleDto } from './roles/dto/assign-role.dto';
-export { RoleResponseDto } from './roles/dto/role-response.dto';
+export { CreateRoleDto } from './modules/roles/dto/create-role.dto';
+export { AssignRoleDto } from './modules/roles/dto/assign-role.dto';
+export { RoleResponseDto } from './modules/roles/dto/role-response.dto';
 
 // DTOs — Permissions
-export { CreatePermissionDto } from './permissions/dto/create-permission.dto';
-export { AssignPermissionDto } from './permissions/dto/assign-permission.dto';
-export { PermissionResponseDto } from './permissions/dto/permission-response.dto';
+export { CreatePermissionDto } from './modules/permissions/dto/create-permission.dto';
+export { AssignPermissionDto } from './modules/permissions/dto/assign-permission.dto';
+export { PermissionResponseDto } from './modules/permissions/dto/permission-response.dto';
 
 // DTOs — Password Recovery
-export { ForgotPasswordDto } from './password-recovery/dto/forgot-password.dto';
-export { ResetPasswordDto } from './password-recovery/dto/reset-password.dto';
+export { ForgotPasswordDto } from './modules/password-recovery/dto/forgot-password.dto';
+export { ResetPasswordDto } from './modules/password-recovery/dto/reset-password.dto';
 
 // Swagger helper
 export { setupAdaptivAuthSwagger } from './swagger';
