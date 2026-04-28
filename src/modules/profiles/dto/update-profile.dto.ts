@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString, IsUrl } from 'class-validator';
-import type { ProfileMetadata } from '../../../adapter/adapter.interface';
+import { ProfileMetadata } from '../../../adapter/adapter.interface';
 
 export class UpdateProfileDto {
   @ApiPropertyOptional({ type: String, description: 'First name', example: 'John' })

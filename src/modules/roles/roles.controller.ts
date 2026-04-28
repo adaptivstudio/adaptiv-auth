@@ -31,7 +31,7 @@ export class RolesController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new role', operationId: 'createRole' })
-  @ApiResponse({ status: 201, description: 'Role created', type: () => RoleResponseDto })
+  @ApiResponse({ status: 201, description: 'Role created', type: RoleResponseDto })
   @ApiResponse({ status: 409, description: 'Role name already exists' })
   async create(@Body() dto: CreateRoleDto): Promise<RoleResponseDto> {
     const role = await this.rolesService.create(dto);
@@ -40,7 +40,7 @@ export class RolesController {
 
   @Get()
   @ApiOperation({ summary: 'List all roles', operationId: 'listRoles' })
-  @ApiResponse({ status: 200, description: 'List of roles', type: () => [RoleResponseDto] })
+  @ApiResponse({ status: 200, description: 'List of roles', type: RoleResponseDto, isArray: true })
   async list(): Promise<RoleResponseDto[]> {
     const roles = await this.rolesService.list();
     return roles.map(RoleResponseDto.from);
@@ -49,7 +49,7 @@ export class RolesController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a role by ID', operationId: 'getRoleById' })
   @ApiParam({ name: 'id', description: 'Role ID' })
-  @ApiResponse({ status: 200, description: 'Role found', type: () => RoleResponseDto })
+  @ApiResponse({ status: 200, description: 'Role found', type: RoleResponseDto })
   @ApiResponse({ status: 404, description: 'Role not found' })
   async findOne(@Param('id') id: string): Promise<RoleResponseDto> {
     const role = await this.rolesService.findById(id);
@@ -103,7 +103,7 @@ export class RolesController {
     operationId: 'getUserRoles',
   })
   @ApiParam({ name: 'userId', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'User roles', type: () => [RoleResponseDto] })
+  @ApiResponse({ status: 200, description: 'User roles', type: RoleResponseDto, isArray: true })
   async getUserRoles(@Param('userId') userId: string): Promise<RoleResponseDto[]> {
     const roles = await this.rolesService.getUserRoles(userId);
     return roles.map(RoleResponseDto.from);
